@@ -47,12 +47,12 @@ const Filter = () => {
               className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
             >
               <option  value="Any Location">Any Location</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Pune">Pune</option>
-              <option value="Kerela">Kerela</option>
-              <option value="Bangalore">Bangalore</option>
-              <option value="Gujarat">Gujarat</option>
-              <option value="Himachal">Himachal</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="pune">Pune</option>
+              <option value="kerela">Kerela</option>
+              <option value="bangalore">Bangalore</option>
+              <option value="gujarat">Gujarat</option>
+              <option value="himachal">Himachal</option>
             </select>
 
             <select className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
