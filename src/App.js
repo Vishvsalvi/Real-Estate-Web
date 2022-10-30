@@ -30,7 +30,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, states);
 
   function newSearch(name){
-    const propertyName = name.charAt(0).toUpperCase() + name.slice(1);
+    const propertyName = name.toLowerCase();
     const filteredData = propertyData.filter(item=>{
       return Object.keys(item).some(key=>{
         return item[key].toString().includes(propertyName)

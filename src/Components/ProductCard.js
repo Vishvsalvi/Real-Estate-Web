@@ -21,7 +21,7 @@ const ProductCard = ({ name, location, price, furnish_type, img }) => {
           </div>
   
           <div className="mt-4">
-            <h2 className="font-[poppins]  font-bold text-base md:text-lg text-blue-700 line-clamp-1" title="New York">
+            <h2 className="font-[poppins] capitalize font-bold text-base md:text-lg text-blue-700 line-clamp-1" title="New York">
               {name}
             </h2>
             <p className="mt-2 text-sm text-gray-500 line-clamp-1 font-[poppins] " title="New York, NY 10004, United States">
