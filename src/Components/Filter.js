@@ -1,18 +1,26 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { PropertyContext } from "../App";
 
 const Filter = () => {
-	const { filter, newSearch } = useContext(PropertyContext);
+	const { filter, newSearch, advancedFilter } = useContext(PropertyContext);
   const [inputText, setInputText] = useState("");
  
+  const [state_1, setState_1] = useState("Any Location")
+  const [state_2, setState_2] = useState(null)
 
 
+  useEffect(()=>{
+   
+    advancedFilter(state_1, state_2)
+    
+  },[state_1, state_2])
  
   return (
     <div>
-      <div className="w-full md:w-2/3 shadow p-5 rounded-lg bg-white relative mx-auto mt-14 ">
+      <div className="w-full md:w-2/3 shadow p-5 rounded-lg bg-white relative mx-auto mt-14 ">  
         <div className="relative">
           <label className="sr-only" htmlFor="search">
             {" "}
@@ -43,10 +51,10 @@ const Filter = () => {
               onChange={(e) => {
                 const selectedProperty = e.target.value;
                 filter(selectedProperty);
+                setState_1(selectedProperty)
               }}
               className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
             >
-              <option  value="Any Location">Any Location</option>
               <option value="mumbai">Mumbai</option>
               <option value="pune">Pune</option>
               <option value="kerela">Kerela</option>
@@ -55,10 +63,17 @@ const Filter = () => {
               <option value="himachal">Himachal</option>
             </select>
 
-            <select className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+            <select
+            onChange={(e)=>{
+              const selectedFurnish = e.target.value;
+              setState_2(selectedFurnish)
+            }}
+
+
+             className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
               <option value="Furnish Type">Furnish Type</option>
-              <option value="Fully Furnished">Fully Furnished</option>
-              <option value="Partially Furnished">Partially Furnished</option>
+              <option value="fully furnished">Fully Furnished</option>
+              <option value="partially furnished">Partially Furnished</option>
               <option value="Not Furnished">Not Furnished</option>
             </select>
 

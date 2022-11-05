@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { useReducer } from "react";
 import "./App.css";
 import Body from "./Components/Body";
@@ -9,10 +10,22 @@ import { propertyData } from "./data";
 export const PropertyContext = React.createContext(); 
 
 function App() {
+
+
+
+  const [location, setLocation] = useState("Any Location")
+  const [furnish, setFurnish] = useState("Furnish Type");
+
+
+  useEffect(()=>{
+    filter(location)
+  },[location])
+
+
+
   function reducer(state, action) { // 
 
     if (action.type === "SEARCH") {
-      console.log("Working...");
       return {
         result: action.payload,
       };
@@ -42,9 +55,34 @@ function App() {
   }
 
 
+  function advancedFilter(advancedLocation, advancedFurnish){
+ 
+    let payloadData = propertyData;
+    // console.log(advancedLocation, advancedFurnish);
+    if(advancedLocation === "Any Location"){
+      payloadData = propertyData
+    }
+    if(advancedLocation !== "Any Location"){
+      payloadData = propertyData.filter((element)=>{
+        return advancedLocation === element.location
+      })
+    }
+    if(advancedFurnish !== "Any Location"){
+      payloadData = propertyData.filter((element)=>{
+        return advancedFurnish === element.furnish_type
+      })
+    }
+    console.log(payloadData)
+  }
+
  // Filtering location
 
-  function filter(location){
+  function filter(selectedLocation){
+    setLocation(selectedLocation)
+
+    const payloadData = propertyData;
+    
+
     if(location==="Any Location"){
       dispatch({ type:"SEARCH", payload:propertyData })
     }else{
@@ -59,7 +97,7 @@ function App() {
 
 
   return (
-    <PropertyContext.Provider value={{ propertyData, state, filter, newSearch }}> 
+    <PropertyContext.Provider value={{ propertyData, state, filter, newSearch,advancedFilter }}> 
       <Body />
       <ProductDisplay />
     </PropertyContext.Provider>
