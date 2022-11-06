@@ -5,18 +5,19 @@ import { useContext } from "react";
 import { PropertyContext } from "../App";
 
 const Filter = () => {
-	const { filter, newSearch, advancedFilter } = useContext(PropertyContext);
+	const {  newSearch, advancedFilter } = useContext(PropertyContext);
   const [inputText, setInputText] = useState("");
  
-  const [state_1, setState_1] = useState("Any Location")
-  const [state_2, setState_2] = useState(null)
+  const [location, setLocation] = useState('Any Location')
+  const [furnish, setFurnish] = useState('Furnish Type')
+  const [price, setPrice] = useState("Any Price")
 
 
   useEffect(()=>{
    
-    advancedFilter(state_1, state_2)
+    advancedFilter(location, furnish, price)
     
-  },[state_1, state_2])
+  },[location, furnish, price])
  
   return (
     <div>
@@ -50,11 +51,11 @@ const Filter = () => {
             <select 
               onChange={(e) => {
                 const selectedProperty = e.target.value;
-                filter(selectedProperty);
-                setState_1(selectedProperty)
+                setLocation(selectedProperty)
               }}
               className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
             >
+              <option value="Any Location">Any Location</option>
               <option value="mumbai">Mumbai</option>
               <option value="pune">Pune</option>
               <option value="kerela">Kerela</option>
@@ -66,7 +67,7 @@ const Filter = () => {
             <select
             onChange={(e)=>{
               const selectedFurnish = e.target.value;
-              setState_2(selectedFurnish)
+              setFurnish(selectedFurnish)
             }}
 
 
@@ -77,7 +78,12 @@ const Filter = () => {
               <option value="Not Furnished">Not Furnished</option>
             </select>
 
-            <select className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+            <select
+            onChange={(e)=>{
+              const selectPrice = e.target.value;
+              setPrice(selectPrice);
+            }}
+             className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
               <option value="">Any Price</option>
               <option value="5000-10000">₹ 5000 - ₹10000</option>
               <option value="10000-15000">₹10000 - ₹15000</option>

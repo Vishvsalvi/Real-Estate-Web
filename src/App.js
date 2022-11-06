@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
 import { useReducer } from "react";
 import "./App.css";
 import Body from "./Components/Body";
@@ -10,16 +9,6 @@ import { propertyData } from "./data";
 export const PropertyContext = React.createContext(); 
 
 function App() {
-
-
-
-  const [location, setLocation] = useState("Any Location")
-  const [furnish, setFurnish] = useState("Furnish Type");
-
-
-  useEffect(()=>{
-    filter(location)
-  },[location])
 
 
 
@@ -55,49 +44,68 @@ function App() {
   }
 
 
-  function advancedFilter(advancedLocation, advancedFurnish){
- 
-    let payloadData = propertyData;
-    // console.log(advancedLocation, advancedFurnish);
-    if(advancedLocation === "Any Location"){
-      payloadData = propertyData
-    }
-    if(advancedLocation !== "Any Location"){
-      payloadData = propertyData.filter((element)=>{
-        return advancedLocation === element.location
-      })
-    }
-    if(advancedFurnish !== "Any Location"){
-      payloadData = propertyData.filter((element)=>{
-        return advancedFurnish === element.furnish_type
-      })
-    }
-    console.log(payloadData)
-  }
+  function advancedFilter(advancedLocation, advancedFurnish, advancedPrice){
 
- // Filtering location
+    let filteredData = propertyData;
 
-  function filter(selectedLocation){
-    setLocation(selectedLocation)
+      if(advancedLocation==="Any Location"){
+        filteredData = filteredData.filter((element)=>{
+          return element.location !== advancedLocation;
+        })
+      }else{
+        filteredData = filteredData.filter((element)=>{
+          return element.location === advancedLocation;
+        })
 
-    const payloadData = propertyData;
+      }
+
+      if(advancedFurnish ==="Furnish Type"){
+        filteredData = filteredData.filter((element)=>{
+          return element.furnish_type !== advancedFurnish;
+        })
+      }else{
+        filteredData = filteredData.filter((element)=>{
+          return element.furnish_type === advancedFurnish;
+        })
+
+      }
+
+      if(advancedPrice ==="Any Price"){
+        filteredData = filteredData.filter((element)=>{
+          return element.price !== advancedPrice;
+        })
+      }else{
+        switch (advancedPrice) {
+          case "5000-10000":filteredData = filteredData.filter((element)=>{
+            return element.price >= 5000 && element.price <= 10000
+          })
+            break;
+          case "10000-15000":filteredData = filteredData.filter((element)=>{
+            return element.price >= 10000 && element.price <= 15000
+          })
+            break;
+          case "15000-20000":filteredData = filteredData.filter((element)=>{
+            return element.price >= 15000 && element.price <= 20000
+          })
+            break;
+          case "20000-25000":filteredData = filteredData.filter((element)=>{
+            return element.price >= 20000 && element.price <= 25000
+          })
+            break;
+        
+          default:
+            break;
+        }
+      }
+
+      console.log(filteredData)
+      dispatch({ type:"SEARCH", payload:filteredData })
     
-
-    if(location==="Any Location"){
-      dispatch({ type:"SEARCH", payload:propertyData })
-    }else{
-    const newList = propertyData.filter((property) => {
-      return property.location === location ;
-    });
-
-    dispatch({ type:"SEARCH", payload:newList })
-
-    }
   }
 
 
   return (
-    <PropertyContext.Provider value={{ propertyData, state, filter, newSearch,advancedFilter }}> 
+    <PropertyContext.Provider value={{ propertyData, state, newSearch,advancedFilter }}> 
       <Body />
       <ProductDisplay />
     </PropertyContext.Provider>
